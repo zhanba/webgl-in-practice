@@ -6,11 +6,8 @@ const VSHADER_SOURCE = `
 `
 
 const FSHADER_SOURCE = `
-  precision mediump float;
-  uniform float u_Width;
-  uniform float u_Height;
   void main() {
-    gl_FragColor = vec4(gl_FragCoord.x / u_Width, 0.0, gl.FragCoord.y / u_Height, 1.0)
+    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
   }
 `
 
@@ -34,6 +31,7 @@ function main() {
     console.log('Falied to set the position of the vertices')
     return
   }
+
 
   gl.clearColor(0.0, 0.0, 0.0, 1.0)
   gl.clear(gl.COLOR_BUFFER_BIT)
