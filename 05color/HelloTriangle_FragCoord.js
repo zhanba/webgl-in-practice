@@ -6,8 +6,11 @@ const VSHADER_SOURCE = `
 `
 
 const FSHADER_SOURCE = `
+  precision mediump float;
+  uniform float u_Width;
+  uniform float u_Height;
   void main() {
-    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    gl_FragColor = vec4(gl_FragCoord.x/u_Width, 0.0, gl_FragCoord.y/u_Height, 1.0);
   }
 `
 
@@ -60,10 +63,18 @@ function initVertexBuffers(gl) {
     console.log('Failed to get the storage location of a_Position')
     return
   }
-
   gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0)
-
   gl.enableVertexAttribArray(a_Position)
+
+  const width = gl.drawingBufferWidth
+  const height = gl.drawingBufferHeight
+
+  const u_Width = gl.getUniformLocation(gl.program, 'u_Width')
+  const u_Height = gl.getUniformLocation(gl.program, 'u_Height')
+
+  gl.uniform1fv(u_Width, new Float32Array([width]))
+  gl.uniform1fv(u_Height, new Float32Array([height]))
+
   return n
 }
 
